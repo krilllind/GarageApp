@@ -1,1 +1,6 @@
 c:\users\elev\documents\visual studio 2013\Projects\GarageApplication\GarageApplication\bin\Debug\GarageApplication.exe.config
+C:\Users\elev\documents\visual studio 2013\Projects\GarageApplication\GarageApplication\obj\Debug\GarageApplication.csprojResolveAssemblyReference.cache
+C:\Users\elev\documents\visual studio 2013\Projects\GarageApplication\GarageApplication\bin\Debug\GarageApplication.exe
+C:\Users\elev\documents\visual studio 2013\Projects\GarageApplication\GarageApplication\bin\Debug\GarageApplication.pdb
+C:\Users\elev\documents\visual studio 2013\Projects\GarageApplication\GarageApplication\obj\Debug\GarageApplication.exe
+C:\Users\elev\documents\visual studio 2013\Projects\GarageApplication\GarageApplication\obj\Debug\GarageApplication.pdb

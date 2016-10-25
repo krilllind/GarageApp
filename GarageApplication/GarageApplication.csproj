@@ -42,6 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Airplane.cs" />
+    <Compile Include="BaseLogic.cs" />
+    <Compile Include="Classes\Boat.cs" />
+    <Compile Include="Classes\Buss.cs" />
+    <Compile Include="Classes\Car.cs" />
+    <Compile Include="Classes\Garage.cs" />
+    <Compile Include="Classes\Motorcycle.cs" />
+    <Compile Include="Classes\Vehicle.cs" />
+    <Compile Include="GarageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

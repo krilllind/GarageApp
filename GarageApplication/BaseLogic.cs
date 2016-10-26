@@ -10,9 +10,14 @@ namespace GarageApplication
     {
         public static dynamic CheckInput(string input, string type = "string", bool caseSensitive = false, List<string> acceptable = null)
         {
+            if (!caseSensitive)
+                input = input.ToLower();
+
+            input.Trim();
+
             try
             {
-                if (input.Trim().Length <= 0)
+                if (input.Length <= 0)
                 {
                     Console.WriteLine("Invalid input! Please enter in right information.");
                     return CheckInput(Console.ReadLine(), type, caseSensitive, acceptable);
@@ -26,19 +31,13 @@ namespace GarageApplication
                 switch (type.ToLower())
                 {
                     case "string":
-                        if (caseSensitive)
-                            return input;
-                        else
-                            return input.ToLower();
+                        return input;
                     case "int":
                         return int.Parse(input);
                     case "char":
-                        if (caseSensitive)
-                            return input[0];
-                        else
-                            return input.ToLower()[0];
+                        return input[0];
                     default:
-                        return input.ToLower();
+                        return input;
                 }
             }
             catch (Exception)

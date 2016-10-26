@@ -29,9 +29,10 @@ namespace GarageApplication
             string str = "";
 
             foreach (Vehicle v in Garage.VehiclesInGarage)
-            {
                 str += v.ToString();
-            }
+
+            if (str.Length <= 0)
+                str = "There is no vehicles in the garage.";
 
             return str;
         }
@@ -80,6 +81,36 @@ namespace GarageApplication
             {
                 return false;
             }
+        }
+
+        public string SearchForVehicle(string searchProp, string searchStr)
+        {
+            string str = "";
+            IEnumerable<Vehicle> q = null;
+            searchStr = searchStr.ToLower();
+
+            try
+            {
+                q = Garage.Where(o =>
+                    {
+                        return o.GetType()
+                            .GetProperty(searchProp)
+                            .GetValue(o, null)
+                            .ToString()
+                            .ToLower()
+                            .Contains(searchStr);
+                    })
+                    .OrderBy(o => o.Name);
+            }
+            catch (Exception) { }
+
+            foreach (var vehicle in q)
+                str += vehicle.ToString();
+
+            if (str.Length <= 0)
+                str = "No vehicle found!";
+
+            return str;
         }
     }
 }

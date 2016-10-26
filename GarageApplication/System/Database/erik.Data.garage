@@ -1,0 +1,13 @@
+# Database table containing information about garage vehicles.
+# File created 2016-10-26 15:40:24
+GarageName=erik
+GarageMaxAmount=32
+
+Type=Car
+Name=Volvo
+RegNumber=ABC123
+Color=red
+NumberOfTires=4
+ModelYear=2000
+NeedLicens=True
+~

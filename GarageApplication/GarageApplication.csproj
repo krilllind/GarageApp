@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationIOStream.cs" />
     <Compile Include="Classes\Airplane.cs" />
     <Compile Include="BaseLogic.cs" />
     <Compile Include="Classes\Boat.cs" />

@@ -11,11 +11,23 @@ namespace GarageApplication
         static void Main(string[] args)
         {
             GarageHandler gh = new GarageHandler();
+            ApplicationIOStream io = new ApplicationIOStream("C:/Users/elev/Documents/Visual Studio 2013/Projects/GarageApplication/GarageApplication");
+            io.Load();
+
+            if(io.FoundLoadableFile)
+            {
+                gh.AddGarage(io.GarageName, io.GarageMaxSize);
+
+                foreach (var item in io.VehicleSpecs)
+                {
+                    gh.AddNewVehicleToGarage(item);
+                }
+            }
 
             while (true)
             {
                 Console.WriteLine("Welcome to the garage. Choose between the options below:\n");
-                Console.WriteLine("1. {0}\n2. {1}\n3. {2}\n0. {3}\n", "View garage.", "Add new garage.", "Save garage.","Exit Application.");
+                Console.WriteLine("1. {0}\n2. {1}\n3. {2}\n4. {3}\n0. {4}\n", "View garage.", "Add new garage.", "Save garage.", "Delete saved garage.", "Exit Application.");
                 
                 int option = BaseLogic.CheckInput(Console.ReadLine(), "int");
                 Console.Clear();
@@ -50,7 +62,7 @@ namespace GarageApplication
                                 case 2:
                                     Dictionary<string, dynamic> VehicleInformation = new Dictionary<string, dynamic>();
 
-                                    Console.WriteLine("Add new vehicle to the garage.\n0. Go back.");
+                                    Console.WriteLine("Add new vehicle to the garage.\n0. Go back.\n");
 
                                     Console.Write("What vehicle type do you want to add?\n(Car, Buss, Boat, Airplane, Motorcycle): ");
                                     string vehicleType = BaseLogic.CheckInput(Console.ReadLine(), "string", false, new List<string> { "car", "buss", "boat", "airplane", "motorcycle", "0" });
@@ -64,9 +76,18 @@ namespace GarageApplication
                                     string vehicleName = BaseLogic.CheckInput(Console.ReadLine(), "string", true);
                                     VehicleInformation.Add("Name", vehicleName);
 
-                                    Console.Write("\nEnter vehicle reg-num: ");
-                                    string vehicleRegNum = BaseLogic.CheckInput(Console.ReadLine(), "string", true);
-                                    VehicleInformation.Add("Regnum", vehicleRegNum);
+                                    string vehicleRegNum = "";
+                                    do
+                                    {
+                                        Console.Write("\nEnter vehicle reg-num: ");
+                                        vehicleRegNum = BaseLogic.CheckInput(Console.ReadLine(), "string", true);
+
+                                        if (vehicleRegNum.Length == 6)
+                                            VehicleInformation.Add("RegNumber", vehicleRegNum);
+                                        else
+                                            Console.WriteLine("Reg-num must be of six characters.");
+
+                                    } while (vehicleRegNum.Length != 6);
 
                                     Console.Write("\nEnter vehicle color: ");
                                     string vehicleColor = BaseLogic.CheckInput(Console.ReadLine(), "string");
@@ -74,11 +95,20 @@ namespace GarageApplication
 
                                     Console.Write("\nEnter number of tires on vehicle: ");
                                     int vehicleNumTires = BaseLogic.CheckInput(Console.ReadLine(), "int");
-                                    VehicleInformation.Add("NumTires", vehicleNumTires);
+                                    VehicleInformation.Add("NumberOfTires", vehicleNumTires);
 
-                                    Console.Write("\nEnter vehicle model year: ");
-                                    int vehicleModleYear = BaseLogic.CheckInput(Console.ReadLine(), "int");
-                                    VehicleInformation.Add("ModelYear", vehicleModleYear);
+                                    int vehicleModleYear = 0;
+                                    do
+                                    {
+                                        Console.Write("\nEnter vehicle model year: ");
+                                        vehicleModleYear = BaseLogic.CheckInput(Console.ReadLine(), "int");
+
+                                        if (vehicleModleYear > 0)
+                                            VehicleInformation.Add("ModelYear", vehicleModleYear);
+                                        else
+                                            Console.WriteLine("Model year must be greater then year 0.");
+
+                                    } while (vehicleModleYear <= 0);
 
                                     Console.Write("\nDo you need a licens to drive this vehicle? (Y/N): ");
                                     char vehicleLicens = BaseLogic.CheckInput(Console.ReadLine(), "char", false, new List<string> { "y", "Y", "n", "N" });
@@ -206,7 +236,39 @@ namespace GarageApplication
                         break;
                     
                     case 3:
-                        Console.WriteLine("Saving garage, please wait...");
+                        if(gh.Garage != null)
+                        {
+                            bool saved = io.Save(gh.Garage);
+
+                            Console.Clear();
+                            if(saved)
+                                Console.WriteLine("Garage has been saved!");
+                            else
+                                Console.WriteLine("Garage could not be saved.");  
+                        }
+                        else
+                        {
+                            Console.WriteLine("No garage exists, please create a new garage before saving.");
+                        }
+
+                        Console.ReadKey();
+                        break;
+
+                    case 4:
+                        Console.WriteLine("Are you sure you want to delete this garage? (Y/N)");
+                        option = BaseLogic.CheckInput(Console.ReadLine(), "char", false, new List<string> { "y", "Y", "n", "N" });
+
+                        if(option == 'y')
+                        {
+                            bool removed = io.RemoveData(gh.Garage.GarageName);
+
+                            if (removed)
+                                Console.WriteLine("Database removed! Running local temp system.");
+                            else
+                                Console.WriteLine("Could not remove database, please try again!");
+
+                            Console.ReadKey();
+                        }
 
                         break;
 

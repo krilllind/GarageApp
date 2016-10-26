@@ -11,10 +11,18 @@ namespace GarageApplication
     {
         public Garage<Vehicle> Garage { get; private set; }
 
-        public bool AddGarage(string garageName)
+        public bool AddGarage(string garageName, int garageAmount = -1)
         {
-            Random rand = new Random();
-            int x = rand.Next(0, 50);
+            int x = 0;
+            if(garageAmount == -1)
+            {
+                Random rand = new Random();
+                x = rand.Next(0, 50);
+            }
+            else
+            {
+                x = garageAmount;
+            }
 
             Garage = new Garage<Vehicle>(garageName, x);
 
@@ -40,25 +48,25 @@ namespace GarageApplication
         public void AddNewVehicleToGarage(Dictionary<string, dynamic> Specs)
         {
             string option = Specs["Type"].ToString();
-            Specs["Regnum"] = Specs["Regnum"].ToString().ToUpper();
+            Specs["RegNumber"] = Specs["RegNumber"].ToString().ToUpper();
             Vehicle item = null;
 
             switch(option.ToLower())
             {
                 case "car":
-                    item = new Car(Specs["Name"], Specs["Regnum"], Specs["Color"], Specs["NumTires"], Specs["ModelYear"], Specs["NeedLicens"]);
+                    item = new Car(Specs["Name"], Specs["RegNumber"], Specs["Color"], Specs["NumberOfTires"], Specs["ModelYear"], Specs["NeedLicens"]);
                     break;
                 case "buss":
-                    item = new Buss(Specs["Name"], Specs["Regnum"], Specs["Color"], Specs["NumTires"], Specs["ModelYear"], Specs["NeedLicens"]);
+                    item = new Buss(Specs["Name"], Specs["RegNumber"], Specs["Color"], Specs["NumberOfTires"], Specs["ModelYear"], Specs["NeedLicens"]);
                     break;
                 case "boat":
-                    item = new Boat(Specs["Name"], Specs["Regnum"], Specs["Color"], Specs["NumTires"], Specs["ModelYear"], Specs["NeedLicens"]);
+                    item = new Boat(Specs["Name"], Specs["RegNumber"], Specs["Color"], Specs["NumberOfTires"], Specs["ModelYear"], Specs["NeedLicens"]);
                     break;
                 case "airplane":
-                    item = new Airplane(Specs["Name"], Specs["Regnum"], Specs["Color"], Specs["NumTires"], Specs["ModelYear"], Specs["NeedLicens"]);
+                    item = new Airplane(Specs["Name"], Specs["RegNumber"], Specs["Color"], Specs["NumberOfTires"], Specs["ModelYear"], Specs["NeedLicens"]);
                     break;
                 case "motorcycle":
-                    item = new Motorcycle(Specs["Name"], Specs["Regnum"], Specs["Color"], Specs["NumTires"], Specs["ModelYear"], Specs["NeedLicens"]);
+                    item = new Motorcycle(Specs["Name"], Specs["RegNumber"], Specs["Color"], Specs["NumberOfTires"], Specs["ModelYear"], Specs["NeedLicens"]);
                     break;
                 default:
                     break;

@@ -60,7 +60,7 @@ namespace GarageApplication.Classes
             else
                 licens = "NO";
 
-            return "Name: " + this.Name + "\nColor: " + this.Color + "\nModel year: " + this.ModelYear + "\nRequire licens: " + licens + "\nReg-num: " + this.RegNumber + "\n\n";
+            return "Name: " + this.Name + "\nType: " + this.GetType().ToString().Split('.').Last() + "\nColor: " + this.Color + "\nModel year: " + this.ModelYear + "\nRequire licens: " + licens + "\nReg-num: " + this.RegNumber + "\n\n";
         }
     }
 }

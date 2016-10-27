@@ -83,11 +83,14 @@ namespace GarageApplication
                                         vehicleRegNum = BaseLogic.CheckInput(Console.ReadLine(), "string", true);
 
                                         if (vehicleRegNum.Length == 6)
-                                            VehicleInformation.Add("RegNumber", vehicleRegNum);
+                                            if (!gh.CarExists(vehicleRegNum))
+                                                VehicleInformation.Add("RegNumber", vehicleRegNum);
+                                            else
+                                                Console.WriteLine("There is already a vehicle with reg-num {0} in the garage!", vehicleRegNum);
                                         else
                                             Console.WriteLine("Reg-num must be of six characters.");
 
-                                    } while (vehicleRegNum.Length != 6);
+                                    } while ( !(!gh.CarExists(vehicleRegNum) && vehicleRegNum.Length == 6) );
 
                                     Console.Write("\nEnter vehicle color: ");
                                     string vehicleColor = BaseLogic.CheckInput(Console.ReadLine(), "string");

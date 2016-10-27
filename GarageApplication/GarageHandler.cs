@@ -35,6 +35,18 @@ namespace GarageApplication
         public string ViewAllVehicles()
         {
             string str = "";
+            var q = Garage.VehiclesInGarage
+                    .GroupBy(o => o.GetType())
+                    .Select(o => new
+                    {
+                        count = o.Count(), type = o.Key.Name
+                    });
+                    
+            foreach (var item in q)
+                str += item.count + " vehicle of type " + item.type + ".\n";
+
+            if(str.Length > 0)
+                str += "\n";
 
             foreach (Vehicle v in Garage.VehiclesInGarage)
                 str += v.ToString();
@@ -85,10 +97,8 @@ namespace GarageApplication
                 Garage.RemoveVehicle(item);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public string SearchForVehicle(string searchProp, string searchStr)
@@ -119,6 +129,16 @@ namespace GarageApplication
                 str = "No vehicle found!";
 
             return str;
+        }
+
+        public bool CarExists(string regNum)
+        {
+            Vehicle item = Garage.GetVehicleByREGNUM(regNum.ToUpper());
+
+            if (item == null)
+                return false;
+
+            return true;
         }
     }
 }
